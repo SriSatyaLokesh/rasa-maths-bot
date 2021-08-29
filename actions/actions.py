@@ -63,7 +63,7 @@ class ShowQuestionAction(Action):
             # we can improve "HINT" by providing question specific hint getting from DB
         buttonDetails = {
             "Hint" : "/user.request_hint",
-            "Submit": answer
+            answer : answer
         }
         buttons = []
         for button in buttonDetails:
@@ -125,6 +125,7 @@ class SolveProblemForm(Action):
         # if we get more than one entity
         for expression in value:
             try:
+                expression = self.solve_again(tracker.latest_message.get('text'))
                 eval(expression)
                 if expression.isnumeric():
                     raise InavlidExpressionException
