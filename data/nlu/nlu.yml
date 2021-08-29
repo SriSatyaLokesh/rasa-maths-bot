@@ -85,6 +85,12 @@ nlu:
     - could you please help me to solve a maths question
     - can you solve this [2+53/56-2]{"entity":"expression"} question?
     - I need your help to solve a maths problem
+    - help to solve a problem
+    - help to solve maths
+    - help to solve a question
+    - help me to solve a problem
+    - help for maths problem
+    - please help me with my question
     - please help me to solve an equation [2+53/56-2]{"entity":"expression"}
 
 - intent: user.ask_how

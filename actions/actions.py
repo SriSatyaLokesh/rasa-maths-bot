@@ -13,6 +13,7 @@ from rasa_sdk.events import SlotSet, AllSlotsReset, UserUtteranceReverted
 import json
 import random
 import re
+import logging as logger
 
 class ActionDefaultFallback(Action):
     """Executes the fallback action and goes back to the previous state
@@ -33,8 +34,7 @@ class ActionDefaultFallback(Action):
         return [UserUtteranceReverted()]
 
 class ShowQuestionAction(Action):
-    """Executes the fallback action and goes back to the previous state
-    of the dialogue"""
+    """Shows question when user wants to practice"""
 
     def name(self) -> Text:
         return "action_show_question"
@@ -47,6 +47,7 @@ class ShowQuestionAction(Action):
     ) -> List[Dict[Text, Any]]:
         question = None
         answer = None
+        # If question slot is empty i.e., user asked for question freshly get from DB or file. else get from slot
         if tracker.slots.get("question") is None:
             file = open("actions/api_utils/questions.json")
             questionsJson = json.load(file)
@@ -54,9 +55,12 @@ class ShowQuestionAction(Action):
             qna = questions[random.randint(0,len(questions)-1)]
             question=qna.get("question")
             answer = qna.get("answer")
+            logger.info(f'Asked Question {qna}')
         else:
+            # if we are showing question after showing hint
             question = tracker.slots.get("question")
             answer = tracker.slots.get("valid_answer")
+            # we can improve "HINT" by providing question specific hint getting from DB
         buttonDetails = {
             "Hint" : "/user.request_hint",
             "Submit": answer
@@ -73,11 +77,11 @@ class ShowQuestionAction(Action):
             text= "Solve "+str(question)+"\n You can request hint at any time",
             buttons=buttons
         )
+        # we weill use these two slots in action_check_answer
         return [SlotSet("question", question), SlotSet("valid_answer",answer)]
 
 class AnswerSubmitAction(Action):
-    """Executes the fallback action and goes back to the previous state
-    of the dialogue"""
+    """When user submits answer to the given question"""
 
     def name(self) -> Text:
         return "action_check_answer"
@@ -90,14 +94,19 @@ class AnswerSubmitAction(Action):
     ) -> List[Dict[Text, Any]]:
         valid_answer = float(tracker.slots.get("valid_answer"))
         user_answer = float(tracker.slots.get("answer"))
-        if valid_answer is not None and round(user_answer,2) == round(valid_answer,2):
-            dispatcher.utter_message(response= "utter_you_did_it")
-        else:
-            dispatcher.utter_message(text="Oh NO! Wrong Answer.")
+        try:
+            if valid_answer is not None and round(user_answer,2) == round(valid_answer,2):
+                dispatcher.utter_message(response= "utter_you_did_it")
+            else:
+                dispatcher.utter_message(text="Oh NO! Wrong Answer.")
+        except Exception as err:
+            logger.error(f'failed to check answer - {err}')
+            dispatcher.utter_message(response="bot_down")
         dispatcher.utter_message(response= "utter_ask_another_problem")
         return [AllSlotsReset()]
 
 class InavlidExpressionException(Exception):
+    """To validate when whether expression is really invalid"""
     pass
 
 class SolveProblemForm(Action):
@@ -110,10 +119,10 @@ class SolveProblemForm(Action):
                             value: Text,
                             dispatcher: CollectingDispatcher,
                             tracker: Tracker,):
-        print("recieved expression - ", value)
+        logger.info(f'DIET extracted {value} as expression')
         if type(value) is not list:
             value = [value]
-        print(value)
+        # if we get more than one entity
         for expression in value:
             try:
                 eval(expression)
@@ -130,25 +139,27 @@ class SolveProblemForm(Action):
                 dispatcher.utter_message(response= "utter_invalid_division")
             except Exception:
                 expression = None
-                dispatcher.utter_message(
-                        response="utter_invalid_expression",
-                    )
+                dispatcher.utter_message(response="utter_invalid_expression")
             return expression
 
     def solve_again(self,msg):
+        """Will extract enity from the user message, if DIET fails to extract"""
         reg = re.findall(r'[0-9.]+|[*/+\-\^\(\)]', msg)
         expression = ''.join(reg)
+        logger.info(f'manually indentified the expression {expression} from {msg}')
         return expression
 
     def run(self,
-               dispatcher: CollectingDispatcher,
-               tracker: Tracker,
-               domain: Dict[Text, Any]) -> List[Dict]:
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict]:
         question = self.validate_expression(tracker.get_slot("expression"),dispatcher, tracker)
+        # validate the expression before evaluating the answer
         if question is not None:
             try:
                 answer = eval(question)
-            except Exception:
+            except Exception as err:
+                logger.error(f'error while evaluating user question {err}')
                 answer = None
             if answer is not None:
                 dispatcher.utter_message(

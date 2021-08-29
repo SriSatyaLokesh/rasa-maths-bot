@@ -1,5 +1,12 @@
 version: "2.0"
 nlu:
+- intent : chitchat/bodmas_rule
+  examples: |
+    - What is BODMAS rule?
+    - bodmas?
+    - BODMAS
+    - explain BODMAS
+    - what do you mean by BODMAS?
 - intent: chitchat/agent.acquaintance
   examples: |
     - tell me about your personality

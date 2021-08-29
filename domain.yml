@@ -102,7 +102,10 @@ responses:
   utter_solved_method:
   - text: By applying mathematical operations as dictated by the BODMAS rule
 
-  utter_bodmas_rule:
+  utter_bot_down:
+  - text: Sorry My Brain is not working as it is supposed to do. I wont be able to complete this action at this moment. you can continue with another.
+
+  utter_chitchat/bodmas_rule:
   - text: BODMAS rule is the order of operations in calculations. Operations are simply the different things that we can do to numbers in maths. It stands for, 'Brackets, Order, Division, Multiplication, Addition, Subtraction.
 
   utter_chitchat/agent.acquaintance:
