@@ -63,7 +63,7 @@ class ShowQuestionAction(Action):
             # we can improve "HINT" by providing question specific hint getting from DB
         buttonDetails = {
             "Hint" : "/user.request_hint",
-            answer : answer
+            "Submit" : answer
         }
         buttons = []
         for button in buttonDetails:
