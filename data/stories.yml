@@ -1,0 +1,126 @@
+version: "2.0"
+
+stories:
+- story: Maths Story 1
+  steps:
+  - intent: user.want_help
+  - action: utter_ask_expression
+  - intent: agent.solve
+    entities: 
+    - expression: "(43 * 2)"
+  - slot_was_set:
+    - expression: "(43 * 2)"
+  - action: action_solve_problem
+
+- story: Maths Story 2
+  steps:
+  - intent: agent.solve
+    entities: 
+    - expression: "22-32"
+  - slot_was_set:
+    - expression: "22-32"
+  - action: action_solve_problem
+  - intent: agent.solve
+    entities: 
+    - expression: "243 + 32"
+  - slot_was_set:
+    - expression: "243 + 32"
+  - action: action_solve_problem
+
+- story: Maths Story Yes
+  steps:
+  - intent: user.help_to_practice
+  - action: utter_ask_practice
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+  - action: action_check_answer
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+  - action: action_check_answer
+  - intent: deny
+  - action: utter_solve_next_time
+
+- story: Maths Story Yes 2
+  steps:
+  - intent: user.help_to_practice
+  - action: utter_ask_practice
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+  - action: action_check_answer
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+  - action: action_check_answer
+  - intent: deny
+  - action: utter_solve_next_time
+  
+
+- story: Maths Story NO
+  steps:
+  - intent: user.help_to_practice
+  - action: utter_ask_practice
+  - intent: deny
+  - action: utter_solve_next_time
+
+- story: Whole Flow 1
+  steps:
+  - intent: agent.solve
+    entities: 
+    - expression: "145/(2+7*3)-30.70123"
+  - slot_was_set:
+    - expression: "145/(2+7*3)-30.70123"
+  - action: action_solve_problem
+  - intent: user.ask_how
+  - action: utter_solved_method
+  - intent: user.wonder_how
+  - action: utter_trained_by
+  - intent: user.help_to_practice
+  - action: utter_ask_practice
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+    entities:
+    - answer: 203
+  - slot_was_set:
+    - answer: 203
+  - action: action_check_answer
+  - intent: affirm
+  - action: action_show_question
+
+- story: Whole Flow 2
+  steps:
+  - intent: agent.solve
+    entities: 
+    - expression: "145/(2+7*3)-30.70123"
+  - slot_was_set:
+    - expression: "145/(2+7*3)-30.70123"
+  - action: action_solve_problem
+  - intent: user.ask_how
+  - action: utter_solved_method
+  - intent: user.wonder_how
+  - action: utter_trained_by
+  - intent: user.help_to_practice
+  - action: utter_ask_practice
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+    entities:
+    - answer: 203
+  - slot_was_set:
+    - answer: 203
+  - action: action_check_answer
+  - intent: affirm
+  - action: action_show_question
+  - intent: submit_answer
+    entities:
+    - answer: 203
+  - slot_was_set:
+    - answer: 203
+  - action: action_check_answer
+  - intent: affirm
+  - action: action_show_question
+  - intent: deny
+  - action: utter_solve_next_time

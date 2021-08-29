@@ -1,0 +1,149 @@
+version: "2.0"
+
+nlu:
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - yeah
+    - ready
+    - i'm ready
+    - sure
+    - lets do it
+    - why not
+    - yes
+    - yeahh
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - nope
+    - no need
+    - maybe later
+    - that's all for now
+    - cant do
+    - dont have time
+    - not sure
+    - maybe no
+    - next time
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- regex: expression
+  examples: |
+    - [0-9]*( ){0,}([+-\/*]( ){0,}[0-9()]*( ){0,})*
+
+- regex: answer
+  examples: |
+    - [-+]?([0-9]*\.[0-9]+|[0-9]+)
+
+- intent: agent.solve
+  examples: |
+    - what is [145/(2+9*3) - 30.70123]{"entity":"expression"}
+    - what is [2+2]{"entity":"expression"}=?
+    - what is [145/(2+7*3)-30.70123]{"entity":"expression"}=?
+    - what is [145/(2+9*3) - 32.70123]{"entity":"expression"}?
+    - what is [2-2]{"entity":"expression"}=?
+    - what is [2-2]{"entity":"expression"}
+    - what is [43 * 43]{"entity":"expression"}
+    - solve [43 * 43]{"entity":"expression"}
+    - tell me [2+23+56-2]{"entity":"expression"}
+    - solve [2+23+576-2]{"entity":"expression"}
+    - can you solve [2*33+56-2]{"entity":"expression"}?
+    - help me with [2*23/56-2]{"entity":"expression"}
+    - please solve [2/23+(56*2)/2]{"entity":"expression"}
+    - answer of [2/(23+56)-2/(2+3)]{"entity":"expression"}?
+    - add [2+2]{"entity":"expression"}
+    - answer [5+8-9+3]{"entity":"expression"}
+    - multiply [3*4]{"entity":"expression"}
+    - divide [3/1]{"entity":"expression"}
+    - solve [2.333+45.20]{"entity":"expression"}
+    - add [3.456+67.29-454+675.12]{"entity":"expression"}
+    - what is [2.00009+45]{"entity":"expression"}
+    - [234.34567 - 43]{"entity":"expression"}
+    - [23.0002 + 235]{"entity":"expression"}
+    - round [21.354424]{"entity":"expression"}
+    - round this to two decimals [45.54724924]{"entity":"expression"}
+
+- intent: user.want_help
+  examples: |
+    - I need some help with a maths question
+    - I need your help to solve a maths question
+    - I want your help for a maths question
+    - I need your guidance to solve a maths quuestion
+    - I need your help to solve this equation
+    - can you help me with additions?
+    - please help me to solve a maths question
+    - could you please help me to solve a maths question
+    - can you solve this [2+53/56-2]{"entity":"expression"} question?
+    - I need your help to solve a maths problem
+    - please help me to solve an equation [2+53/56-2]{"entity":"expression"}
+
+- intent: user.ask_how
+  examples: |
+    - Wow. How did you get that?
+    - Great. How did you get that answer?
+    - Wow. How did you solve it?
+    - Cool. How to solve that?
+    - Amazing. How to solve that?
+    - How did you get that?
+    - What is the formula?
+    - How to solve that?
+    - Can you help me to solve that?
+    - How did you solve the problem?
+    - How to solve this problem?
+
+- intent: user.wonder_how
+  examples: |
+    - How did you get to be so smart?
+    - How can you solve so fast?
+    - How are you so smart?
+    - How you are so intelligent?
+    - Where did you learn?
+    - Who is your teacher?
+    - Who is your maths teacher?
+    - Amazing. you are really fast?
+
+- intent: user.help_to_practice
+  examples: |
+    - Amazing! Can you help me practice too?
+    - Can you help me to practice?
+    - Can you assist me to pratice?
+    - Can you guide me to practice?
+    - I need your help to practice.
+    - I want to learn, Can you help me?
+    - Can you help me to solve more questions?
+    - I want to solve like you, Can you help me?
+    - Hey Can you help me to practice?
+
+- intent: user.request_hint
+  examples: |
+    - Please give me a hint
+    - Hint
+    - Give me a hint
+    - Could you please give me a hint
+    - give me a hint to solve this
+    - I want a hint
+    - want a hint
+    - need a hint
+    - hint please
+    - tell me a hint
+    - help me with a hint
+
+- intent: submit_answer
+  examples: |
+    - [23]{"entity":"answer"}
+    - [-34.34]{"entity":"answer"}
+    - [34.54724]{"entity":"answer"}
+    - answer is [234]{"entity":"answer"}
+    - my answer is [-34]{"entity":"answer"}
+    - my answer is [56.45]{"entity":"answer"}
+    - i think it is [67973.21]{"entity":"answer"}

@@ -1,0 +1,53 @@
+version: "2.0"
+
+rules:
+
+- rule: chitchat
+  steps:
+  - intent: chitchat
+  - action: utter_chitchat
+
+- rule: Always trigger solve Form for solve intent
+  steps:
+  - intent: agent.solve
+  - action: action_solve_problem
+
+- rule: Always trigger AskHelp Form for wanthelp intent
+  steps:
+  - intent: user.want_help
+  - action: utter_ask_expression
+
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+
+- rule: Always trigger AskHelp Form for hint intent
+  steps:
+  - intent: user.request_hint
+  - action: utter_hint
+  - action: action_show_question
+
+- rule: Activate form
+  steps:
+  - action: utter_ask_practice
+  - intent: affirm
+  - action: action_show_question
+
+- rule: Loop form
+  steps:
+  - action: action_check_answer
+  - intent: affirm
+  - action: action_show_question
+
+- rule: Check Answer
+  steps:
+  - action: action_show_question
+  - intent: submit_answer
+  - action: action_check_answer
+
+- rule: Deactivate form
+  steps:
+  - action: action_check_answer
+  - intent: deny
+  - action: utter_solve_next_time
