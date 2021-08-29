@@ -16,10 +16,10 @@ User: Amazing !! Can you help me practice too?
 Bot: Absolutely. Shall we do 1 problem now?         
 User: Sure.         
 Bot: Solve this problem: 30/(5+1) - 12*13 + 4*(7+2/4) = ___ <user input box> {Buttons: Submit, Hint}         
-User: <Clicks Hint button> or <Types “Give me a hint”>         
+User: `<Clicks Hint button>` or `<Types “Give me a hint”>`         
 Bot: Use Bodmas to solve this problem. Simplify the terms within brackets first !!         
-Bot: <Reiterates question with UI elements>         
-User: <Inputs answer in form> + <clicks submit>                  
+Bot: `< Reiterates question with UI elements >`         
+User: `< Inputs answer in form > + < clicks submit >`                  
 Bot: Woah!! You did i          
 Bot: Would you like to try another problem?         
 User: I think that’ll be all for now         
