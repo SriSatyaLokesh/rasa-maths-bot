@@ -75,10 +75,9 @@ responses:
   - text: Use Bodmas to solve this problem. Simplify the terms within brackets first.
 
   utter_trained_by:
-  - text: Well, I learned at Bytelearn.
-  - text: Yeah, I got trained by Bytelearn.
-  - text: yeah! Bytelearn trained me.
-  - text: Well! I learned from the best teachers at Bytelearn.
+  - text: Well, Satya taught me.
+  - text: Yeah, I got trained by Satya.
+  - text: yeah! Satya trained me.
 
   utter_you_did_it:
   - text: Woah! You did it.
@@ -150,7 +149,7 @@ responses:
   - text: I don't mean to be. I'll ask my developers to work on making me more amusing.
   - text: I can let my developers know so they can make me fun.
   utter_chitchat/agent.boss:
-  - text: Satya is his name. Coding is his game.
+  - text: Satya is his name. Programming is his game.
   utter_chitchat/agent.busy:
   - text: I always have time to chat with you. What can I do for you?
   - text: Never too busy for you. Shall we chat?

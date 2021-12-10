@@ -25,3 +25,8 @@ Bot: Woah!! You did i
 Bot: Would you like to try another problem?         
 User: I think that’ll be all for now         
 Bot: Great. Looking forward to see you again         
+
+
+Rasa NLU - `rasa run --model ./models --cors "*" --enable-api`
+Rasa Core - `rasa run actions`
+Rasa Train - `rasa data validate && time rasa train --debug-plots`
